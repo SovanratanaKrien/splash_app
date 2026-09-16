@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:splash_app/constants/colors.dart';
+import 'package:splash_app/constants/app_colors.dart';
 import 'package:splash_app/screens/main_screen.dart';
 import 'package:splash_app/screens/splash_screen.dart';
 

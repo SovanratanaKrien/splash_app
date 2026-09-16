@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:splash_app/constants/colors.dart';
+import 'package:splash_app/constants/app_colors.dart';
 import 'package:splash_app/screens/authenticator/login_screen.dart';
 
 class OnboardScreen extends StatefulWidget {

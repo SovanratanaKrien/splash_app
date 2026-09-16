@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:splash_app/constants/colors.dart';
+import 'package:splash_app/constants/app_colors.dart';
 import 'package:splash_app/widgets/bottom_navigation_bar.dart';
-import 'package:splash_app/widgets/custom_popup_modal_screen.dart';
+import 'package:splash_app/widgets/custom_popup_modal.dart';
 import 'package:splash_app/widgets/primary_button.dart';
 
 class ShippingScreen extends StatefulWidget {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:splash_app/constants/colors.dart';
+import 'package:splash_app/constants/app_colors.dart';
 import 'package:splash_app/screens/user/profile_screen.dart';
+import 'package:splash_app/widgets/custom_text_form_field.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -54,8 +55,65 @@ class HomeScreen extends StatelessWidget {
       body: const SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            // search product
+            CustomTextFormField(
+              hintText: 'Search product',
+              prefixIcon: Icon(Icons.search),
+              suffixIcon: Icon(Icons.filter_alt),
+            ),
+            // filter
+            SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'All Features',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.black,
+                  ),
+                ),
+                Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  children: [
+
+                Text(
+                  'Sort',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.black,
+                  )               ),
+                Text(
+                  'Filters',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.black,
+                  ),
+                ),
+  ]
+                )
+              ],
+            ),
+            SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Product List',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.black,
+                  ),
+                ),
+              ],
+            ),
+            // product list
             Text(
               'Welcome to',
               style: TextStyle(
@@ -64,24 +122,6 @@ class HomeScreen extends StatelessWidget {
                 color: AppColors.black,
               ),
             ),
-            // Text(
-            //   'Home Screen',
-            //   textAlign: TextAlign.center,
-            //   style: TextStyle(
-            //     fontSize: 20,
-            //     fontWeight: FontWeight.w700,
-            //     color: AppColors.black,
-            //   ),
-            // ),
-            // SizedBox(height: 8),
-            // Text(
-            //   'Profile Page',
-            //   style: TextStyle(
-            //     fontSize: 24,
-            //     fontWeight: FontWeight.w400,
-            //     color: AppColors.black,
-            //   ),
-            // ),
           ],
         ),
       ),

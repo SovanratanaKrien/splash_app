@@ -2,11 +2,11 @@ class ProductModel {
   final String id;
   final String title;
   final double price;
-  final String imageUrl; // Added the image field!
+  final String imageUrl;
 
   ProductModel({
-    required this.id, 
-    required this.title, 
+    required this.id,
+    required this.title,
     required this.price,
     required this.imageUrl,
   });
@@ -16,7 +16,7 @@ class ProductModel {
       id: json['id'],
       title: json['title'],
       price: json['price'].toDouble(),
-      imageUrl: json['image_url'], // Parsing the image path from your data
+      imageUrl: json['image_url'],
     );
   }
 }
