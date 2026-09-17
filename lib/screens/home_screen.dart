@@ -121,46 +121,46 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _categoriesSection(BuildContext context) {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          'Categories',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            color: AppColors.black,
-          ),
-        ),
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          CustomButton(
-            text: 'View All',
-            backIcon: Icons.arrow_forward,
-            onPressed: null,
-            backgroundColor: AppColors.grayLight,
-            textColor: AppColors.black,
-            fontSize: 16,
-            borderRadius: 12,
-            width: 90,
-            height: 40,
-          ),
-          SizedBox(width: 8),
-          CustomButton(
-            text: 'Filters',
-            backIcon: Icons.filter_alt,
-            onPressed: null,
-            backgroundColor: AppColors.grayLight,
-            textColor: AppColors.black,
-            fontSize: 16,
-            borderRadius: 12,
-            width: 90,
-            height: 40,
-          ),
-        ])
-      ],
-    );
-  }
+  // Widget _categoriesSection(BuildContext context) {
+  //   return const Row(
+  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //     children: [
+  //       Text(
+  //         'Categories',
+  //         style: TextStyle(
+  //           fontSize: 18,
+  //           fontWeight: FontWeight.w600,
+  //           color: AppColors.black,
+  //         ),
+  //       ),
+  //       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+  //         CustomButton(
+  //           text: 'View All',
+  //           backIcon: Icons.arrow_forward,
+  //           onPressed: null,
+  //           backgroundColor: AppColors.grayLight,
+  //           textColor: AppColors.black,
+  //           fontSize: 16,
+  //           borderRadius: 12,
+  //           width: 90,
+  //           height: 40,
+  //         ),
+  //         SizedBox(width: 8),
+  //         CustomButton(
+  //           text: 'Filters',
+  //           backIcon: Icons.filter_alt,
+  //           onPressed: null,
+  //           backgroundColor: AppColors.grayLight,
+  //           textColor: AppColors.black,
+  //           fontSize: 16,
+  //           borderRadius: 12,
+  //           width: 90,
+  //           height: 40,
+  //         ),
+  //       ])
+  //     ],
+  //   );
+  // }
 
   Widget _productList(BuildContext context) {
     return const Text(
