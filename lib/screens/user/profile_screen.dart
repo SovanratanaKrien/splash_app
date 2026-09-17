@@ -1,11 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:splash_app/constants/app_colors.dart';
-import 'package:splash_app/screens/authenticator/login_screen.dart';
 import 'package:splash_app/screens/user/add_payment_screen.dart';
-import 'package:splash_app/widgets/primary_button.dart';
+
+import '../../widgets/custom_popup_modal.dart';
+import '../authenticator/login_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
+
+  Future<void> _signOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -241,9 +247,57 @@ class ProfileScreen extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         child: OutlinedButton.icon(
-          onPressed: () {
-            // TODO: Handle logout logic
-            _showLogoutDialog(context);
+          onPressed: () => {
+            showDialog(
+              context: context,
+              builder: (context) => CustomPopupModal(
+                backgroundColor: AppColors.white,
+                title: Column(
+                  children: [
+                    Container(
+                      height: 80,
+                      width: 80,
+                      decoration: const BoxDecoration(
+                        color: AppColors.redAccent,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.logout_rounded,
+                        size: 50,
+                        color: AppColors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      'Log Out',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.black,
+                      ),
+                    ),
+                  ],
+                ),
+                content: const Text(
+                  'Are you sure you want to leave? You will need to log back in to access your account.',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.black,
+                  ),
+                ),
+                action1: 'Cancel',
+                action2: 'Log Out',
+                onAction1Pressed: () => Navigator.pop(context),
+                onAction2Pressed: () => {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()),
+                  )
+                },
+              ),
+            )
           },
           icon: const Icon(Icons.logout, color: AppColors.redAccent),
           label: const Text(
@@ -262,58 +316,6 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  void _showLogoutDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: AppColors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        title: const Text(
-          'Log Out',
-          style: TextStyle(color: AppColors.black, fontSize: 20),
-        ),
-        content: const Text(
-          'Are you sure you want to log out?',
-          style: TextStyle(color: AppColors.black, fontSize: 16),
-        ),
-        actions: [
-          PrimaryButton(
-            width: 100,
-            color: AppColors.blue,
-            padding: const EdgeInsets.all(0),
-            onPressed: () => Navigator.pop(context),
-            text: 'Cancel',
-            isLoading: false,
-            // child: const Text(
-            //   'Cancel',
-            //   style: TextStyle(
-            //     color: AppColors.black,
-            //     fontSize: 16,
-            //     fontWeight: FontWeight.bold,
-            //   ),
-            // ),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const LoginScreen()),
-            ),
-            child: const Text(
-              'Log Out',
-              style: TextStyle(
-                color: AppColors.red,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

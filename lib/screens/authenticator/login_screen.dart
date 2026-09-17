@@ -1,8 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:splash_app/constants/app_colors.dart';
 import 'package:splash_app/screens/authenticator/forget_password_screen.dart';
 import 'package:splash_app/screens/authenticator/signup_screen.dart';
-import 'package:splash_app/screens/main_screen.dart';
+import 'package:splash_app/screens/home_screen.dart';
 import 'package:splash_app/widgets/custom_text_field.dart';
 import 'package:splash_app/widgets/primary_button.dart';
 
@@ -14,10 +15,55 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
   bool _obscurePassword = true;
+
+  Future<void> signIn() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      await _auth.signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      // Navigate to home screen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
+      );
+    } on FirebaseAuthException catch (e) {
+      String errorMessage;
+      if (e.code == 'user-not-found') {
+        errorMessage = 'No user found for that email.';
+      } else if (e.code == 'wrong-password') {
+        errorMessage = 'Wrong password provided for that user.';
+      } else {
+        errorMessage = 'An error occurred. Please try again.';
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(errorMessage)),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('An unexpected error occurred: $e')),
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +71,14 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             const Text(
               'Welcome\nBack!',
               style: TextStyle(
@@ -99,16 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
               text: 'Login',
               isLoading: _isLoading,
               padding: const EdgeInsets.only(top: 24),
-              onPressed: () {
-                setState(() => _isLoading = true);
-                Future.delayed(const Duration(seconds: 1), () {
-                  setState(() => _isLoading = false);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const MainScreen()),
-                  );
-                });
-              },
+              onPressed: signIn,
             ),
             const SizedBox(height: 24),
             Row(
@@ -142,7 +182,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ],
             ),
-          ],
+            ],
+            ),
+          ),
         ),
       ),
     );
