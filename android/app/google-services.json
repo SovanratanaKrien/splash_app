@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "963924854030",
+    "project_id": "splash-app-learn",
+    "storage_bucket": "splash-app-learn.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:963924854030:android:60f92741a1601642ba035f",
+        "android_client_info": {
+          "package_name": "com.example.splash_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzlT0nK22SlRpjMOv5nDy9-AUsqgKmAYY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
