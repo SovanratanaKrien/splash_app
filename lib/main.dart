@@ -1,4 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
+// import 'firebase_options.dart';
+
 import 'package:flutter/material.dart';
 import 'package:splash_app/constants/app_colors.dart';
 import 'package:splash_app/screens/authenticator/login_screen.dart';
@@ -6,7 +8,6 @@ import 'package:splash_app/screens/checkout/add_payment_screen.dart';
 import 'package:splash_app/screens/checkout/check_out_screen.dart';
 import 'package:splash_app/screens/checkout/place_order_screen.dart';
 import 'package:splash_app/screens/checkout/shipping_screen.dart';
-import 'package:splash_app/screens/home_screen.dart';
 import 'package:splash_app/screens/main_screen.dart';
 import 'package:splash_app/screens/onboard/onboard_screen.dart';
 import 'package:splash_app/screens/splash_screen.dart';
@@ -16,6 +17,9 @@ import 'package:splash_app/screens/user/setting_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
   runApp(const MyApp());
 }
 
@@ -34,7 +38,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const SplashScreen(),
       routes: {
-        '/home': (context) => const HomeScreen(),
+        '/home': (context) => const MainScreen(),
         '/main': (context) => const MainScreen(),
         '/onboard': (context) => const OnboardScreen(),
         // auth screens

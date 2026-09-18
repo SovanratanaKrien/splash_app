@@ -61,15 +61,30 @@ class BottomNavBar extends StatelessWidget {
 
     return InkWell(
       onTap: () => onTabTapped(index),
+      borderRadius: BorderRadius.circular(16),
       child: SizedBox(
         width: 72,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: color, size: 32),
+            AnimatedScale(
+              scale: isSelected ? 1.0 : 0.9,
+              duration: const Duration(milliseconds: 180),
+              curve: Curves.easeOut,
+              child: Icon(icon, color: color, size: 28),
+            ),
             const SizedBox(height: 4),
-            Text(label, style: TextStyle(color: color, fontSize: 12)),
+            AnimatedDefaultTextStyle(
+              duration: const Duration(milliseconds: 180),
+              curve: Curves.easeOut,
+              style: TextStyle(
+                color: color,
+                fontSize: 12,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+              ),
+              child: Text(label),
+            ),
           ],
         ),
       ),
