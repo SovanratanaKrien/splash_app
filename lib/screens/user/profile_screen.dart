@@ -28,7 +28,9 @@ class ProfileScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/profile-edit');
+            },
             icon: const Icon(Icons.edit_outlined, color: AppColors.black),
           ),
         ],
@@ -69,6 +71,17 @@ class ProfileScreen extends StatelessWidget {
                   icon: Icons.rate_review_outlined,
                   title: 'My Reviews',
                   onTap: () {},
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            _buildSection(
+              title: 'My Products',
+              items: [
+                _MenuItem(
+                  icon: Icons.shopping_bag_outlined,
+                  title: 'Products',
+                  onTap: () { Navigator.pushNamed(context, '/product-list'); },
                 ),
               ],
             ),

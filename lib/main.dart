@@ -1,25 +1,26 @@
 import 'package:firebase_core/firebase_core.dart';
-// import 'firebase_options.dart';
 
 import 'package:flutter/material.dart';
 import 'package:splash_app/constants/app_colors.dart';
 import 'package:splash_app/screens/authenticator/login_screen.dart';
+import 'package:splash_app/screens/authenticator/signup_screen.dart';
 import 'package:splash_app/screens/checkout/add_payment_screen.dart';
 import 'package:splash_app/screens/checkout/check_out_screen.dart';
 import 'package:splash_app/screens/checkout/place_order_screen.dart';
 import 'package:splash_app/screens/checkout/shipping_screen.dart';
 import 'package:splash_app/screens/main_screen.dart';
 import 'package:splash_app/screens/onboard/onboard_screen.dart';
+import 'package:splash_app/screens/product/add_product_screen.dart';
+import 'package:splash_app/screens/product/product_details_screen.dart';
+import 'package:splash_app/screens/product/product_list_screen.dart';
 import 'package:splash_app/screens/splash_screen.dart';
+import 'package:splash_app/screens/user/profile_edit_screen.dart';
 import 'package:splash_app/screens/user/profile_screen.dart';
 import 'package:splash_app/screens/user/setting_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
   runApp(const MyApp());
 }
 
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
         '/onboard': (context) => const OnboardScreen(),
         // auth screens
         '/login': (context) => const LoginScreen(),
-        // '/register': (context) => const RegisterScreen(),
+        '/sign-up': (context) => const SignUpScreen(),
         // '/forgot-password': (context) => const ForgotPasswordScreen(),
         // '/reset-password': (context) => const ResetPasswordScreen(),
         // '/verify-email': (context) => const VerifyEmailScreen(),
@@ -58,8 +59,8 @@ class MyApp extends StatelessWidget {
         // '/order-details': (context) => const OrderDetailsScreen(),
 
         // products screens
-        // '/product-list': (context) => const ProductListScreen(),
-        // '/product-detail': (context) => const ProductDetailScreen(),
+        '/add-product': (context) => const AddProductScreen(),
+        '/product-list': (context) => const ProductListScreen(),
         // '/product-search': (context) => const ProductSearchScreen(),
         // '/product-filter': (context) => const ProductFilterScreen(),
         // '/product-category': (context) => const ProductCategoryScreen(),
@@ -84,6 +85,7 @@ class MyApp extends StatelessWidget {
         // user screens
         '/profile': (context) => const ProfileScreen(),
         '/profile-setting': (context) => const SettingScreen(),
+        '/profile-edit': (context) => const ProfileEditScreen(),
         // '/user-address': (context) => const UserAddressScreen(),
         // '/user-address-edit': (context) => const UserAddressEditScreen(),
         // '/user-address-add': (context) => const UserAddressAddScreen(),
@@ -103,6 +105,18 @@ class MyApp extends StatelessWidget {
         // '/cart-empty': (context) => const CartEmptyScreen(),
         // '/cart-coupon': (context) => const CartCouponScreen(),
         // '/cart-success': (context) => const CartSuccessScreen(),
+      },
+      onGenerateRoute: (settings) {
+        if (settings.name == '/product-details') {
+          final product = settings.arguments;
+          if (product is Map<String, dynamic>) {
+            return MaterialPageRoute(
+              builder: (context) => ProductDetailsScreen(product: product),
+              settings: settings,
+            );
+          }
+        }
+        return null;
       },
     );
   }

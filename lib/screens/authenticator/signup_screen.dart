@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:splash_app/constants/app_colors.dart';
+import 'package:splash_app/services/database_service.dart';
 import 'package:splash_app/widgets/custom_text_field.dart';
 import 'package:splash_app/widgets/primary_button.dart';
 
@@ -38,12 +39,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
 
     try {
-      await _auth.createUserWithEmailAndPassword(
+      final credential = await _auth.createUserWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
       );
-      // print("Email: ${_emailController.text}");
-      // print("Password: ${_passwordController.text}");
+      final user = credential.user;
+      if (user != null) {
+        await DatabaseService.saveUserProfile(user);
+      }
       // Navigate to home screen
       if (!mounted) return;
       Navigator.of(context).pushReplacementNamed('/home');
@@ -56,6 +59,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
       } else {
         errorMessage = 'An error occurred. Please try again.';
       }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(errorMessage)),
+      );
+    } on FirebaseException catch (e) {
+      final errorMessage = e.plugin == 'firebase_database' &&
+              e.code == 'permission-denied'
+          ? 'Account created, but the database rejected the profile. Deploy the Firebase Database rules.'
+          : 'Could not save your profile. Please try again.';
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(errorMessage)),
