@@ -90,8 +90,9 @@ class _ShippingScreenState extends State<ShippingScreen> {
                         _isLoading = true;
                       });
                       await Future.delayed(const Duration(seconds: 1));
-                      if (!mounted) return;
                       setState(() => _isLoading = false);
+
+                      if (!context.mounted) return;
                       showDialog(
                         context: context,
                         builder: (context) {

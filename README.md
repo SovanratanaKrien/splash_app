@@ -48,16 +48,21 @@ Make sure you have the following installed on your system:
 
 4. **Configure Firebase**
    Make sure you have the Firebase CLI and FlutterFire CLI installed:
+
    ```bash
    dart pub global activate flutterfire_cli
    ```
+
    Then, configure Firebase for this project:
+
    ```bash
    flutterfire configure
    ```
+
    Follow the prompts to select your Firebase project. This will generate the `lib/firebase_options.dart` file required to connect the app to Firebase.
 
    After generating the file, make sure to update your `lib/main.dart` to initialize Firebase:
+
    ```dart
    import 'package:firebase_core/firebase_core.dart';
    import 'firebase_options.dart';
@@ -73,12 +78,14 @@ Make sure you have the following installed on your system:
 
    **Firebase Authentication Setup**
    If you plan to use Firebase Auth for user login/signup, make sure to add `firebase_auth` to your dependencies if it isn't already there:
+
    ```bash
    flutter pub add firebase_auth
    ```
-   
+
    1. Go to your [Firebase Console](https://console.firebase.google.com/) and enable the **Authentication** service. Add sign-in providers like Email/Password or Google.
    2. Import and use the `FirebaseAuth` instance in your code to manage users:
+
    ```dart
    import 'package:firebase_auth/firebase_auth.dart';
 
@@ -94,10 +101,10 @@ Make sure you have the following installed on your system:
 
    **Current Authentication Implementation**
    The app currently has a full Firebase Authentication flow set up. Here are the key code components required for these flows:
-
    - **Sign Up / Registration (`lib/screens/authenticator/signup_screen.dart`)**:
      To register new users, we use `createUserWithEmailAndPassword`.
      **Important**: Always wrap authentication calls in a `try-catch` block to handle Firebase exceptions like "email already in use" or "weak password".
+
      ```dart
      import 'package:firebase_auth/firebase_auth.dart';
 
@@ -117,6 +124,7 @@ Make sure you have the following installed on your system:
    - **Login (`lib/screens/authenticator/login_screen.dart`)**:
      To log in existing users, we use `signInWithEmailAndPassword`.
      **Important**: Ensure that user inputs are validated (e.g., checking for empty or malformed fields) before calling Firebase.
+
      ```dart
      import 'package:firebase_auth/firebase_auth.dart';
 
@@ -136,6 +144,7 @@ Make sure you have the following installed on your system:
    - **Logout (`lib/screens/user/profile_screen.dart`)**:
      From the ProfileScreen, users can log out. It's important to provide a confirmation dialog (`CustomPopupModal`) to prevent accidental logouts.
      **Important**: After a successful `signOut()`, always redirect the user back to the Login Screen and replace the navigation stack to prevent returning to authenticated screens.
+
      ```dart
      import 'package:firebase_auth/firebase_auth.dart';
 
@@ -146,6 +155,12 @@ Make sure you have the following installed on your system:
          context,
          MaterialPageRoute(builder: (context) => const LoginScreen()),
        );
+     }
+
+     // Or
+     onAction2Pressed: () async {
+       await FirebaseAuth.instance.signOut();
+       Navigator.pushReplacementNamed(context, '/login');
      }
      ```
 

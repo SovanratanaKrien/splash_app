@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:splash_app/constants/app_colors.dart';
-import 'package:splash_app/screens/home_screen.dart';
 import 'package:splash_app/widgets/custom_text_field.dart';
 import 'package:splash_app/widgets/primary_button.dart';
 
@@ -43,13 +42,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
         email: _emailController.text,
         password: _passwordController.text,
       );
-      print("Email: ${_emailController.text}");
-      print("Password: ${_passwordController.text}");
+      // print("Email: ${_emailController.text}");
+      // print("Password: ${_passwordController.text}");
       // Navigate to home screen
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
-      );
+      if (!mounted) return;
+      Navigator.of(context).pushReplacementNamed('/home');
     } on FirebaseAuthException catch (e) {
       String errorMessage;
       if (e.code == 'weak-password') {

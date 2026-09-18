@@ -1,9 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:splash_app/constants/app_colors.dart';
-import 'package:splash_app/screens/authenticator/forget_password_screen.dart';
-import 'package:splash_app/screens/authenticator/signup_screen.dart';
-import 'package:splash_app/screens/home_screen.dart';
 import 'package:splash_app/widgets/custom_text_field.dart';
 import 'package:splash_app/widgets/primary_button.dart';
 
@@ -36,11 +33,9 @@ class _LoginScreenState extends State<LoginScreen> {
         email: _emailController.text,
         password: _passwordController.text,
       );
-      // Navigate to home screen
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
-      );
+
+      if (!mounted) return;
+      Navigator.of(context).pushReplacementNamed('/home');
     } on FirebaseAuthException catch (e) {
       String errorMessage;
       if (e.code == 'user-not-found') {
@@ -79,110 +74,102 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-            const Text(
-              'Welcome\nBack!',
-              style: TextStyle(
-                fontSize: 36,
-                fontWeight: FontWeight.w800,
-                color: AppColors.black,
-              ),
-            ),
-            const SizedBox(height: 25),
-            CustomTextField(
-              controller: _emailController,
-              label: 'Username or Email',
-              prefixIcon: Icons.email_outlined,
-              keyboardType: TextInputType.emailAddress,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your email';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 16),
-            CustomTextField(
-              controller: _passwordController,
-              label: 'Password',
-              prefixIcon: Icons.lock_outline,
-              suffixIcon: _obscurePassword
-                  ? Icons.visibility_outlined
-                  : Icons.visibility_off_outlined,
-              onSuffixTap: () {
-                setState(() {
-                  _obscurePassword = !_obscurePassword;
-                });
-              },
-              obscureText: _obscurePassword,
-              validator: (value) {
-                if (value == null || value.length < 6) {
-                  return 'Password must be at least 6 characters';
-                }
-                return null;
-              },
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ForgetPasswordScreen()),
-                  );
-                },
-                child: const Text(
-                  'Forget Password?',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.redPink,
-                    decoration: TextDecoration.underline,
-                    decorationColor: AppColors.redPink,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-            PrimaryButton(
-              text: 'Login',
-              isLoading: _isLoading,
-              padding: const EdgeInsets.only(top: 24),
-              onPressed: signIn,
-            ),
-            const SizedBox(height: 24),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
                 const Text(
-                  'Create an account ?',
+                  'Welcome\nBack!',
                   style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
+                    fontSize: 36,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.black,
                   ),
                 ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const SignUpScreen()),
-                    );
+                const SizedBox(height: 25),
+                CustomTextField(
+                  controller: _emailController,
+                  label: 'Username or Email',
+                  prefixIcon: Icons.email_outlined,
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email';
+                    }
+                    return null;
                   },
-                  child: const Text(
-                    'Sign Up',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.redPink,
-                      decoration: TextDecoration.underline,
-                      decorationColor: AppColors.redPink,
+                ),
+                const SizedBox(height: 16),
+                CustomTextField(
+                  controller: _passwordController,
+                  label: 'Password',
+                  prefixIcon: Icons.lock_outline,
+                  suffixIcon: _obscurePassword
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
+                  onSuffixTap: () {
+                    setState(() {
+                      _obscurePassword = !_obscurePassword;
+                    });
+                  },
+                  obscureText: _obscurePassword,
+                  validator: (value) {
+                    if (value == null || value.length < 6) {
+                      return 'Password must be at least 6 characters';
+                    }
+                    return null;
+                  },
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/forget-password');
+                    },
+                    child: const Text(
+                      'Forget Password?',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.redPink,
+                        decoration: TextDecoration.underline,
+                        decorationColor: AppColors.redPink,
+                      ),
                     ),
                   ),
                 ),
+                const SizedBox(height: 24),
+                PrimaryButton(
+                  text: 'Login',
+                  isLoading: _isLoading,
+                  padding: const EdgeInsets.only(top: 24),
+                  onPressed: signIn,
+                ),
+                const SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Create an account ?',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/sign-up');
+                      },
+                      child: const Text(
+                        'Sign Up',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.redPink,
+                          decoration: TextDecoration.underline,
+                          decorationColor: AppColors.redPink,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
-            ),
-            ],
             ),
           ),
         ),

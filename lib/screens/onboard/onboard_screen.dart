@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:splash_app/constants/app_colors.dart';
-import 'package:splash_app/screens/authenticator/login_screen.dart';
 
 class OnboardScreen extends StatefulWidget {
   const OnboardScreen({super.key});
@@ -48,10 +47,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
         curve: Curves.easeInOut,
       );
     } else {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
-      );
+      Navigator.pushReplacementNamed(context, '/login');
     }
   }
 
@@ -83,10 +79,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const LoginScreen()),
-              );
+              Navigator.pushReplacementNamed(context, '/login');
             },
             child: const Text(
               'Skip',

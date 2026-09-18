@@ -1,5 +1,5 @@
 {
   "cmake.sourceDirectory": "D:/NPCA/CODE/App/splash_app/windows",
-  "java.configuration.updateBuildConfiguration": "interactive",
-  "dart.flutterSdkPath": ".fvm/versions/3.7.0"
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "dart.flutterSdkPath": ".fvm/versions/stable"
 }

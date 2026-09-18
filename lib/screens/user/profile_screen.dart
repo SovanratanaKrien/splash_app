@@ -1,10 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:splash_app/constants/app_colors.dart';
-import 'package:splash_app/screens/user/add_payment_screen.dart';
 
 import '../../widgets/custom_popup_modal.dart';
-import '../authenticator/login_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -64,11 +62,7 @@ class ProfileScreen extends StatelessWidget {
                   icon: Icons.credit_card_outlined,
                   title: 'Payment Methods',
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const AddPaymentScreen()),
-                    );
+                    Navigator.pushNamed(context, '/add-payment');
                   },
                 ),
                 _MenuItem(
@@ -182,7 +176,7 @@ class ProfileScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.black.withOpacity(0.04),
+            color: AppColors.black.withValues(alpha: 0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -212,7 +206,7 @@ class ProfileScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.black.withOpacity(0.04),
+            color: AppColors.black.withValues(alpha: 0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -233,7 +227,7 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
           ),
-          ...items.map((item) => item.build()).toList(),
+          ...items.map((item) => item.build()),
           const SizedBox(height: 8),
         ],
       ),
@@ -289,13 +283,7 @@ class ProfileScreen extends StatelessWidget {
                 action1: 'Cancel',
                 action2: 'Log Out',
                 onAction1Pressed: () => Navigator.pop(context),
-                onAction2Pressed: () => {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const LoginScreen()),
-                  )
-                },
+                onAction2Pressed: () => _signOut(),
               ),
             )
           },
